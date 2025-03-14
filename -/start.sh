@@ -218,17 +218,10 @@ pull_Levels(){
     
     # Start pulling Docker images in the background
     (
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg0 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg1 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg2 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg3 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg4 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg5 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg6 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg7 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg8 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg9 &> /dev/null
-        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg10 &> /dev/null
+        docker pull ghcr.io/aunchagaonkar/war_finals:warg0 &> /dev/null
+        docker pull ghcr.io/aunchagaonkar/war_finals:warg1 &> /dev/null
+        docker pull ghcr.io/aunchagaonkar/war_finals:warg2 &> /dev/null
+        docker pull ghcr.io/aunchagaonkar/war_finals:warg3 &> /dev/null
         # Create a file to indicate completion
         touch /tmp/docker_pulls_complete
     ) &
@@ -274,8 +267,15 @@ fi
 
 # Call start_exit.sh with parameters
 clear
+# if curr_level is 4, then the game ends
+if [ $curr_level -eq 3 ]; then
+    echo "🎉 Congratulations! 🎉"
+    echo "You've completed all available levels of the CTF Demo!"
+    echo "Thank you for playing. You've demonstrated excellent skills!"
+    exit 0
+fi
 
-echo "Welcome to CTF Demo Level $(( curr_level + 1 ))" 
+echo "Welcome to CTF Level $(( curr_level + 1 ))" 
 if [ ! -x "$SCRIPT_DIR/start_exit.sh" ]; then
     # echo "The main script ./-/start.sh.x is not executable. Adding execute permissions."
     chmod +x $SCRIPT_DIR/start_exit.sh

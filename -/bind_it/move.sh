@@ -9,8 +9,8 @@ encode_file(){
     rm /etc/app/.txt
 }
 
-#            1      2      3     4      5       6       7       8        9         10
-passwords=("DEMO" "Q4OS" "MX" "Void" "Bodhi" "antiX" "Solus" "NixOS" "Alpine" "Endeavour")
+#            0      1      2       3     
+passwords=("DEMO" "Q4OS" "Void" "Solus")
 
 # Password check
 read -p "Please enter the password for next level (or type 'stop' to exit the game): " password
@@ -46,6 +46,6 @@ if [[ $curr_level -ge 0 && $curr_level -le ${#passwords[@]} && $password == "${p
     exit 26
 else
     # encode_file
-    echo "Incorrect flag! Please try again."
+    echo "Incorrect password! Please try again."
     exit 0
 fi

@@ -46,6 +46,7 @@ start_Level() {
     local curr_l=$2
     local container_name="warg$(( curr_l + 1 ))"
 
+
     if docker ps -a --filter "name=$container_name" --format "{{.Names}}" | grep -q "$container_name"; then
         echo "Container '$container_name' already exists. Starting and attaching to it..."
         docker start "$container_name" &> /dev/null
@@ -60,9 +61,9 @@ start_Level() {
         fi
     else
         if [ $(( curr_l + 1 )) -ne 9 ]; then
-            docker run --hostname "$user" --user root -v /var/run/docker.sock:/var/run/docker.sock --mount type=bind,source="$SCRIPT_DIR/bind_it",target=/etc/app -it --name "$container_name" ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg$(( curr_l + 1 )) /bin/bash -c "cd /home/wlug && /bin/bash" 
+            docker run --hostname "$user" --user root -v /var/run/docker.sock:/var/run/docker.sock --mount type=bind,source="$SCRIPT_DIR/bind_it",target=/etc/app -it --name "$container_name" ghcr.io/aunchagaonkar/war_finals:warg$(( curr_l + 1 )) /bin/bash -c "cd /home/wlug && /bin/bash" 
         else
-            docker run --hostname "$user" --user user1 -v /var/run/docker.sock:/var/run/docker.sock --mount type=bind,source="$SCRIPT_DIR/bind_it",target=/etc/app -it --name "$container_name" ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg$(( curr_l + 1 )) /bin/sh -c "cd ~ && /bin/sh"
+            docker run --hostname "$user" --user user1 -v /var/run/docker.sock:/var/run/docker.sock --mount type=bind,source="$SCRIPT_DIR/bind_it",target=/etc/app -it --name "$container_name" ghcr.io/aunchagaonkar/war_finals:warg$(( curr_l + 1 )) /bin/sh -c "cd ~ && /bin/sh"
         fi
     fi
 
