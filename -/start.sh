@@ -61,7 +61,7 @@ restart_Docker() {
                 return 0
             fi
             ;;
-        "Ubuntu"|"Debian"|"RHEL"|"Fedora"|"Arch")
+        "Ubuntu"|"Debian"|"RHEL"|"Fedora"|"Arch"|"Kali")
             if systemctl restart docker; then
                 echo "Docker was successfully restarted"
                 return 0
@@ -99,37 +99,44 @@ get_Docker() {
             echo "Installing Docker for Kali Linux..."
             sudo apt update && sudo apt install -y docker.io
             install_status=$?
+            clear
             ;;
         "Ubuntu"|"Debian")
             echo "Installing Docker for $os_type..."
             sudo apt update && sudo apt install -y docker.io
             install_status=$?
+            clear
             ;;
         "RHEL")
             echo "Installing Docker for $os_type..."
             sudo yum install -y docker
             install_status=$?
+            clear
             ;;
         "Fedora")
             echo "Installing Docker for $os_type..."
             sudo dnf install -y docker
             install_status=$?
+            clear
             ;;
         "Arch")
             echo "Installing Docker for $os_type..."
             sudo pacman -S --noconfirm docker
             install_status=$?
+            clear
             ;;
         "MacOS")
             echo "Installing Docker for MacOS..."
             brew install --cask docker
             install_status=$?
+            clear
             ;;
         *)
             # Fallback to snap for unknown distributions
             echo "Unknown distribution, trying snap install..."
             sudo snap install docker
             install_status=$?
+            clear
             ;;
     esac
     
@@ -157,6 +164,7 @@ get_User(){
             break
         fi
     done
+    clear
 
     touch "$SCRIPT_DIR/bind_it/.txt"
     declare -A d
@@ -169,8 +177,9 @@ get_User(){
     rm "$SCRIPT_DIR/bind_it/.txt"
 }
 
-# Get game images
+# Get game images   
 pull_Levels(){
+    clear
     echo "Patience is the key! Pulling Levels..."
     echo "Till then open your cheatsheets, relax and have a sip of commands."
     echo "
@@ -207,17 +216,46 @@ pull_Levels(){
     ----------------------------
     "
     
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg0 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg1 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg2 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg3 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg4 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg5 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg6 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg7 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg8 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg9 &> /dev/null
-    docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg10 &> /dev/null
+    # Start pulling Docker images in the background
+    (
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg0 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg1 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg2 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg3 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg4 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg5 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg6 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg7 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg8 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg9 &> /dev/null
+        docker pull ghcr.io/walchand-linux-users-group/wildwarrior44/wargame_finals:warg10 &> /dev/null
+        # Create a file to indicate completion
+        touch /tmp/docker_pulls_complete
+    ) &
+
+    # Save the process ID of the background job
+    pull_pid=$!
+
+    # Define the spinner characters
+    spinner=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏")
+    
+    # Position cursor at the bottom of the cheatsheet
+    echo -e "\n\nConnect to a stable internet connection for best experience."
+    
+    # Run the spinner animation until the background process completes
+    i=0
+    while kill -0 $pull_pid 2>/dev/null && [ ! -f /tmp/docker_pulls_complete ]; do
+        echo -ne "\rPulling game levels ${spinner[$i]} "
+        i=$(( (i+1) % ${#spinner[@]} ))
+        sleep 0.2
+    done
+    
+    # Clean up the temp file
+    rm -f /tmp/docker_pulls_complete
+    
+    # Show completion message
+    echo -e "\rGame levels downloaded successfully! ✓        "
+    sleep 1
 }
 
 
@@ -228,6 +266,7 @@ if [ -f "$SCRIPT_DIR/bind_it/.txt.b64" ]; then
     curr_level=$(echo "$decoded_content" | sed -n '2p')
     echo $curr_level
 else
+    clear
     get_Docker
     get_User
     pull_Levels
