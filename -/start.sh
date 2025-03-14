@@ -275,7 +275,7 @@ fi
 # Call start_exit.sh with parameters
 clear
 
-echo "Welcome to wargames Level $(( curr_level + 1 ))" 
+echo "Welcome to CTF Demo Level $(( curr_level + 1 ))" 
 if [ ! -x "$SCRIPT_DIR/start_exit.sh" ]; then
     # echo "The main script ./-/start.sh.x is not executable. Adding execute permissions."
     chmod +x $SCRIPT_DIR/start_exit.sh

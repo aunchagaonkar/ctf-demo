@@ -19,3 +19,8 @@ cd ctf-demo
 ```bash
 sudo bash start.sh
 ```
+# Watch the Demo Video
+<video width="600" controls>
+<source src="https://res.cloudinary.com/dg2mm9fsw/video/upload/v1741592559/ivc7tqdmr22hnthfz7lo.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
