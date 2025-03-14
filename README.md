@@ -1,4 +1,4 @@
-### Welcome to Capture The Flag (CTF) Technozion - VISION 2025!
+## Welcome to Capture The Flag (CTF) Technozion - VISION 2025!
 
 #### Minimum Requirements:
 - **OS:** Any Linux Distribution (e.g. Ubuntu, Arch Linux, etc)
@@ -19,5 +19,5 @@ cd ctf-demo
 ```bash
 sudo bash start.sh
 ```
-# Watch the Demo Video
+## Watch the Demo Video
 https://github.com/user-attachments/assets/737902de-6288-49d1-97e4-88e494ccff31
