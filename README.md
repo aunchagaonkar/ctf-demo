@@ -1,7 +1,7 @@
 ### Welcome to Capture The Flag (CTF) Technozion - VISION 2025!
 
 #### Minimum Requirements:
-- **OS:** Any Linux Distribution (e.g., Ubuntu, Arch Linux, etc)
+- **OS:** Any Linux Distribution (e.g. Ubuntu, Arch Linux, etc)
 - **Processor:** Intel Core i3 (8th Gen) / AMD Ryzen 3 3000 Series or equivalent
 - **RAM:** 8 GB
 - **Storage:** At least 3 GB free space
